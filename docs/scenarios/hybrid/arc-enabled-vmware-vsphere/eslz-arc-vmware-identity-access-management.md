@@ -12,11 +12,11 @@ ms.custom: e2e-hybrid, think-tank, e2e-arc-enabled-vmware-vsphere
 
 Azure Arc-enabled VMware vSphere supports on-premises and other cloud environments that are integrated with different identity and access management systems. In addition to existing VMware vCenter role-based access control (RBAC), Azure Arc-enabled VMware vSphere supports Azure RBAC to unify access management across VMware vCenter and minimize operational overhead.
 
-The combination RBAC models your organization should use depends on what usage needs your organization has. Some examples are:
+The combination RBAC models your organization should depend on what usage needs your organization has. Some examples are:
 
 - Onboarding a VMware vCenter to Azure Arc
 - Register and manage Virtual Machines of an Arc-enabled VMware vCenter
-- Deploy guest management (Arc agent) and extensions (Azure Policy, Azure Monitor, etc.) on an Arc-enabled VMware vCenter virtual machines.
+- Deploy guest management (Arc agent) and extensions (Azure Policy, Azure Monitor, etc.) on Arc-enabled VMware vSphere virtual machines.
 - Deploy new VMware virtual machines on an Arc-enabled VMware vCenter
 - Using Azure RBAC to access Azure resources
 
@@ -26,7 +26,7 @@ This article describes Azure Arc-enabled VMware vSphere identity and access mana
 
 ## Architecture
 
-To design the right architecture for your organization, you need to understand [Azure Arc resource bridge](/azure/azure-arc/resource-bridge/overview) and [Azure Arc Custom Location](/azure/azure-arc/platform/conceptual-custom-locations) help to extend Azure Arc capabilities over On Premises or third party hosting locations.
+To design the right architecture for your organization, you need to understand [Azure Arc resource bridge](/azure/azure-arc/resource-bridge/overview) and [Azure Arc Custom Location](/azure/azure-arc/platform/conceptual-custom-locations) which help to extend Azure Arc capabilities over on-premises or third party hosting locations.
 
 ### Azure RBAC on Azure Arc-enabled VMware vSphere
 
@@ -42,22 +42,23 @@ The following diagram displays [Azure Arc-enabled VMware vSphere access from any
 
 ## Design considerations
 
-Review the [identity and access management design area](../../../ready/landing-zone/design-area/identity-access.md) of Azure landing zones to assess the effect of Azure Arc-enabled VMware vSphere on your overall identity and access model.
+Review the [identity and access management design area](../../../ready/landing-zone/design-area/identity-access.md) of Azure landing zones and [identity and access management design area](../../../scenarios/hybrid/arc-enabled-servers
+/eslz-identity-and-access-management.md) of Azure Arc-enabled servers to assess the effect of Azure Arc-enabled VMware vSphere on your overall identity and access model.
 
 **For VMware vCenter onboarding:**
 
 <!-- TODO: Check hyperlink when the appropriate documentation is created. -->
 - Decide between Microsoft Entra user (for manual onboarding of single vCenter) vs service principal (for scripted and headless onboarding of multiple vCenters) for onboarding VMware vCenters to Azure Arc individually or at scale. For more implementation details, refer to the [Automation disciplines critical design area](./eslz-arc-vmware-automation-disciplines.md).
-  - If you chose a service principal, create a service principal and assign the appropriate Azure RBAC role (*Azure Arc VMware Private Clouds Onboarding*) to the service principal.
-- It is recommended to use an external identity source like Microsoft Active Directory Domain Services (AD DS) or LDAPS server to manage identities at vCenter level.
-- [Microsoft Active Directory Domain Services (AD DS) synchronization with Microsoft Entra ID](/entra/identity/domain-services/synchronization) can help to reduce the bridge between on-premises and Azure identities.
-- Create a specific vCenter RBAC role with [appropriate permissions](/azure/azure-arc/resource-bridge/troubleshoot-resource-bridge#insufficient-permissions) for Azure Arc-enabled VMware vSphere appliance.
-- Create a dedicated service account and [assign the specific role to the service account](/azure/azure-arc/vmware-vsphere/support-matrix-for-arc-enabled-vmware-vsphere#required-vsphere-account-privileges) at vCenter root level.
+  - If you chose a service principal, create a service principal and assign the appropriate Azure RBAC role (*Azure Arc VMware Private Clouds Onboarding*) to the service principal. [This should go into recommendations]
+- It is recommended to use an external identity source like Microsoft Active Directory Domain Services (AD DS) or LDAPS server to manage identities at vCenter level. [This should go into recommendations, we can discuss if we should have this recommendation or not since its on the VMware level]
+- [Microsoft Active Directory Domain Services (AD DS) synchronization with Microsoft Entra ID](/entra/identity/domain-services/synchronization) can help to reduce the bridge between on-premises and Azure identities. [we can discuss if we should have this recommendation or not since its on the VMware level]
+- Create a specific vCenter RBAC role with [appropriate permissions](/azure/azure-arc/resource-bridge/troubleshoot-resource-bridge#insufficient-permissions) for Azure Arc-enabled VMware vSphere appliance. [This should be a recommendation]
+- Create a dedicated service account and [assign the specific role to the service account](/azure/azure-arc/vmware-vsphere/support-matrix-for-arc-enabled-vmware-vsphere#required-vsphere-account-privileges) at vCenter root level. [This should be a recommendation]
 
 
 **For VMware vCenter management:**
 
-- As Azure Arc-enabled VMware vSphere brings Microsoft Entra authentication and Azure RBAC to on-premises or other vCenter  environments, you must decide between existing vCenter access management and [Azure RBAC](/azure/role-based-access-control/overview), depending on your organization's security and governance requirements.
+- As Azure Arc-enabled VMware vSphere brings Microsoft Entra authentication and Azure RBAC to on-premises or other vCenter environments, you must decide between existing vCenter access management and [Azure RBAC](/azure/role-based-access-control/overview), depending on your organization's security and governance requirements.
 - Determine if Azure Arc-enabled VMware vSphere gives you the flexibility to [perform administration of VMware vCenter](/azure/azure-arc/vmware-vsphere/administer-arc-vmware) without your inbound firewall ports being open to your on-premises or other cloud networks.
 - Determine if Azure RBAC is the right choice when you have many VMware vCenters running in on-premises and other cloud environments and you need to simplify identity administration across all VMware vCenters.
 
